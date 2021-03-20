@@ -2,68 +2,72 @@
 
 ## users テーブル
 
-| Column                | Type   | Options     |
-| --------------------- | ------ | ----------- |
-| nickname              | string | null: false |
-| email                 | string | null: false |
-| password              | string | null: false |
-| password_confirmation | string | null: false |
-| last_name             | string | null: false |
-| first_name            | string | null: false |
-| last_name(katakana)   | string | null: false |
-| first_name(katakana)  | string | null: false |
-| birthday(year)        | numeric| null: false |
-| birthday(month)       | numeric| null: false |
-| birthday(date)        | numeric| null: false |
+| Column                | Type   | Options                  |
+| --------------------- | ------ | ------------------------ |
+| nickname              | string | null: false, unique:true |
+| email                 | string | null: false              |
+| encrypted_password    | string | null: false              |
+| last_name             | string | null: false              |
+| first_name            | string | null: false              |
+| last_name_katakana    | string | null: false              |
+| first_name_katakana   | string | null: false              |
+| birthday              | date   | null: false              |
 
 
 ### Association
 
 - has_many :items
-- has_many :orders
+- has_many :purchases
 
 ## items テーブル
 
 | Column               | Type      | Options           |
 | -------------------  | --------- | ----------------  |
-| product_image        | string    | null: false       |
 | product_name         | string    | null: false       |
 | product_explantion   | text      | null: false       |
-| product_category     | string    | null: false       |
-| product_quality      | string    | null: false       |
-| shipping_charges     | string    | null: false       |
-| delivery_area        | string    | null: false       |
-| delivery_days        | string    | null: false       |
-| price                | numeric   | null: false       |
-| fee                  | numeric   | null: false       |
-| profit               | numeric   | null: false       |
-| user_id              | references| foreign_key: true |
+| product_category_id  | integer   | null: false       |
+| product_quality_id   | integer   | null: false       |
+| shipping_charges_id  | integer   | null: false       |
+| prefecture_id        | integer   | null: false       |
+| delivery_days_id     | integer   | null: false       |
+| price                | integer   | null: false       |
+| user                 | references| foreign_key: true |
 
 
 ### Association
 
 - belongs_to :user
-- has_one :order
+- has_one :purchase
+
 
 ## orders テーブル
 
 | Column                  | Type      | Options           |
 | ----------------------  | --------- | ----------------  |
-| credit_card_information | numeric   | null: false       |
-| expiration_date_month   | numeric   | null: false       |
-| expiration_date_year    | numeric   | null: false       |
-| security_code           | numeric   | null: false       |
 | postal_code             | string    | null: false       |
-| prefectures             | string    | null: false       |
+| prefecture_id           | integer   | null: false       |
 | manicipality            | string    | null: false       |
 | address                 | string    | null: false       |
-| building_name           | string    | null: false       |
-| phone_number            | numeric   | null: false       |
-| user_id                 | references| foreign_key: true |
-| item_id                 | references| foreign_key: true |
+| building_name           | string    |                   |
+| phone_number            | string    | null: false       |
+| purchase                | references| foreign_key: true |
 
 
 ### Association
 
-- belongs_to :user
-- belongs_to :item
+- belongs_to :purchase
+
+
+## purchases テーブル
+
+| Column | Type      | Options           |
+| -----  | --------- | ----------------  |
+| item   | references| foreign_key: true |
+| user   | references| foreign_key: true |
+
+
+### Association
+
+- belong_to :user
+- belong_to :item
+- has_one :order
