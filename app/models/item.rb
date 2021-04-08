@@ -11,8 +11,8 @@ class Item < ApplicationRecord
   with_options presence: true do
     validates :product_name
     validates :product_explanation
-    validates :price, numericality: { greater_than_or_equal_to: 3000, less_than_or_equal_to: 9999999, message: "設定範囲外です。" }
-    validates :price, numericality: { only_integer: true, message: "is invalid. Input half-width characters." }
+    validates :price, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9_999_999, message: '設定範囲外です。' }
+    validates :price, numericality: { only_integer: true, message: 'is invalid. Input half-width characters.' }
     validates :image
   end
   validates :product_category_id, numericality: { other_than: 1 }
@@ -20,5 +20,4 @@ class Item < ApplicationRecord
   validates :shipping_charges_id, numericality: { other_than: 1 }
   validates :prefecture_id, numericality: { other_than: 0 }
   validates :delivery_days_id, numericality: { other_than: 1 }
-
 end

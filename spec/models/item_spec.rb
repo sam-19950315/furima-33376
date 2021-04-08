@@ -5,64 +5,64 @@ RSpec.describe Item, type: :model do
     @item = FactoryBot.build(:item)
   end
 
-  describe "商品出品機能" do
-    context "商品出品が正常にできる時" do
-      it "出品画像、商品名、商品の説明、商品の詳細、配送について、販売価格（半角数字で、範囲が、300-9999999）の全ての項目が存在するとき" do
+  describe '商品出品機能' do
+    context '商品出品が正常にできる時' do
+      it '出品画像、商品名、商品の説明、商品の詳細、配送について、販売価格（半角数字で、範囲が、300-9999999）の全ての項目が存在するとき' do
         expect(@item).to be_valid
       end
     end
-    context "商品出品が正常に行えない時" do
-      it "product_nameが空の時" do
-        @item.product_name = ""
+    context '商品出品が正常に行えない時' do
+      it 'product_nameが空の時' do
+        @item.product_name = ''
         @item.valid?
         expect(@item.errors.full_messages).to include("Product name can't be blank")
       end
-      it "product_explantionがからの時" do
-        @item.product_explanation = ""
+      it 'product_explantionがからの時' do
+        @item.product_explanation = ''
         @item.valid?
         expect(@item.errors.full_messages).to include("Product explanation can't be blank")
       end
-      it "product_category_idが1の時" do
+      it 'product_category_idが1の時' do
         @item.product_category_id = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include("Product category must be other than 1")
-      end      
-      it "product_quality_idが1の時" do
+        expect(@item.errors.full_messages).to include('Product category must be other than 1')
+      end
+      it 'product_quality_idが1の時' do
         @item.product_quality_id = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include("Product quality must be other than 1")
+        expect(@item.errors.full_messages).to include('Product quality must be other than 1')
       end
-      it "shipping_charges_idが1の時" do
+      it 'shipping_charges_idが1の時' do
         @item.shipping_charges_id = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include("Shipping charges must be other than 1")
+        expect(@item.errors.full_messages).to include('Shipping charges must be other than 1')
       end
-      it "prefecture_idが0の時" do
+      it 'prefecture_idが0の時' do
         @item.prefecture_id = 0
         @item.valid?
-        expect(@item.errors.full_messages).to include("Prefecture must be other than 0")
+        expect(@item.errors.full_messages).to include('Prefecture must be other than 0')
       end
-      it "delivery_days_idが1の時" do
+      it 'delivery_days_idが1の時' do
         @item.delivery_days_id = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include("Delivery days must be other than 1")
+        expect(@item.errors.full_messages).to include('Delivery days must be other than 1')
       end
-      it "priceが半角数字でない時" do
-        @item.price = "３３３"
+      it 'priceが半角数字でない時' do
+        @item.price = '３３３'
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price is invalid. Input half-width characters.")
+        expect(@item.errors.full_messages).to include('Price is invalid. Input half-width characters.')
       end
-      it "priceが300-9999999でない時" do
+      it 'priceが300-9999999でない時' do
         @item.price = 1
         @item.valid?
-        expect(@item.errors.full_messages).to include("Price 設定範囲外です。")
+        expect(@item.errors.full_messages).to include('Price 設定範囲外です。')
       end
-      it "userが紐づいていいない時" do
+      it 'userが紐づいていいない時' do
         @item.user = nil
         @item.valid?
-        expect(@item.errors.full_messages).to include("User must exist")
+        expect(@item.errors.full_messages).to include('User must exist')
       end
-      it "出品画像が空の時" do
+      it '出品画像が空の時' do
         @item.image = nil
         @item.valid?
         expect(@item.errors.full_messages).to include("Image can't be blank")
