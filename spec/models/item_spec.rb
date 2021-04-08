@@ -22,38 +22,58 @@ RSpec.describe Item, type: :model do
         @item.valid?
         expect(@item.errors.full_messages).to include("Product explanation can't be blank")
       end
-      it 'product_category_idが1の時' do
-        @item.product_category_id = 1
+      it 'product_category_idが0の時' do
+        @item.product_category_id = 0
         @item.valid?
-        expect(@item.errors.full_messages).to include('Product category must be other than 1')
+        expect(@item.errors.full_messages).to include('Product category must be other than 0')
       end
-      it 'product_quality_idが1の時' do
-        @item.product_quality_id = 1
+      it 'product_quality_idが0の時' do
+        @item.product_quality_id = 0
         @item.valid?
-        expect(@item.errors.full_messages).to include('Product quality must be other than 1')
+        expect(@item.errors.full_messages).to include('Product quality must be other than 0')
       end
-      it 'shipping_charges_idが1の時' do
-        @item.shipping_charges_id = 1
+      it 'shipping_charges_idが0の時' do
+        @item.shipping_charges_id = 0
         @item.valid?
-        expect(@item.errors.full_messages).to include('Shipping charges must be other than 1')
+        expect(@item.errors.full_messages).to include('Shipping charges must be other than 0')
       end
       it 'prefecture_idが0の時' do
         @item.prefecture_id = 0
         @item.valid?
         expect(@item.errors.full_messages).to include('Prefecture must be other than 0')
       end
-      it 'delivery_days_idが1の時' do
-        @item.delivery_days_id = 1
+      it 'delivery_days_idが0の時' do
+        @item.delivery_days_id = 0
         @item.valid?
-        expect(@item.errors.full_messages).to include('Delivery days must be other than 1')
+        expect(@item.errors.full_messages).to include('Delivery days must be other than 0')
       end
       it 'priceが半角数字でない時' do
         @item.price = '３３３'
         @item.valid?
         expect(@item.errors.full_messages).to include('Price is invalid. Input half-width characters.')
       end
-      it 'priceが300-9999999でない時' do
-        @item.price = 1
+      it 'priceが半角英数字混合の時' do
+        @item.price = '3a3a3a'
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Price is invalid. Input half-width characters.')
+      end
+      it 'priceが半角英字のみの時' do
+        @item.price = 'aaaaaaa'
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Price is invalid. Input half-width characters.')
+      end
+      it 'priceが全角文字の時' do
+        @item.price = 'アイウエオ'
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Price is invalid. Input half-width characters.')
+      end
+      it 'priceが299円以下の時' do
+        @item.price = 299
+        @item.valid?
+        expect(@item.errors.full_messages).to include('Price 設定範囲外です。')
+      end
+      it 'priceが10000000円以上の時' do
+        @item.price = 10000000
         @item.valid?
         expect(@item.errors.full_messages).to include('Price 設定範囲外です。')
       end
