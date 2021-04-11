@@ -22,6 +22,6 @@ class Item < ApplicationRecord
     validates :prefecture_id
     validates :delivery_days_id
   end
-  
+
   validates :price, numericality: { only_integer: true, message: 'is invalid. Input half-width characters.' }
 end
