@@ -128,7 +128,6 @@
       <% if @items.length > 0 %>
         <% @items.each do |item| %>
           <li class='list'>
-            <% @items.each do |item| %>
               <div class='item-img-content'>
                 <%= link_to item_path(item.id) do %>
                   <%= image_tag item.image, class: "item-img" %>
@@ -154,7 +153,6 @@
               </div>
             <% end %>
           </li>
-        <% end %>
       <% else %>
         <li class='list'>
           <%= link_to '#' do %>
