@@ -1,7 +1,7 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_action :find, only: [:show, :edit, :update, :destroy]
-  before_action :security, only: [:edit, :update, :destroy, :destroy]
+  before_action :security, only: [:edit, :update, :destroy]
 
   def index
     @items = Item.includes(:user).order('created_at DESC')
