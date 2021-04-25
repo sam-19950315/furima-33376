@@ -7,7 +7,7 @@ class OrderPurchase
     validates :prefecture_id, numericality: { other_than: 0 }
     validates :manicipality
     validates :address
-    validates :phone_number, format: { with:  /\A\d{10}$|^\d{11}\z/, message: "は、-なしで記入してください。"}
+    validates :phone_number, format: { with:  /\A\d{10}$|^\d{11}\z/, message: "は、-なしの10桁か11桁で記入してください。"}
   end
 
   def save
