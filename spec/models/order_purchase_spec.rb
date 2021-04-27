@@ -7,16 +7,22 @@ RSpec.describe OrderPurchase, type: :model do
 
   describe '購入者情報登録' do
     context '購入者登録が正常にできる時' do
-      it '郵便番号(ハイフンあり)、都道府県、市区町村、番地、建物名、電話番号(ハイフンなし)が入力されている場合' do
+      it '郵便番号(ハイフンあり)、都道府県、市区町村、番地、建物名、電話番号(ハイフンなし),
+      tokenが入力されている場合' do
         expect(@order).to be_valid
       end
-      it '郵便番号(ハイフンあり)、都道府県、市区町村、番地、電話番号(ハイフンなし)が入力されている場合' do
+      it '郵便番号(ハイフンあり)、都道府県、市区町村、番地、電話番号(ハイフンなし)、tokenが入力されている場合' do
         @order.building_name = ""
         expect(@order).to be_valid
       end
 
     end
     context '購入者登録が正常にできない時' do
+      it 'tokenが存在しないとき' do
+        @order.token = nil
+        @order.valid?
+        expect(@order.errors.full_messages).to include("Token can't be blank")
+      end
       it '郵便番号が存在しないとき' do
         @order.postal_code = ""
         @order.valid?
