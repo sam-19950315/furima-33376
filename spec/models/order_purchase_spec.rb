@@ -18,6 +18,17 @@ RSpec.describe OrderPurchase, type: :model do
 
     end
     context '購入者登録が正常にできない時' do
+      it 'user_idが存在しないとき' do
+        @order.user_id = nil
+        @order.valid?
+        expect(@order.errors.full_messages).to include("User can't be blank")
+      end
+      it 'item_idが存在しないとき' do
+        @order.item_id = nil
+        @order.valid?
+        expect(@order.errors.full_messages).to include("Item can't be blank")
+      end
+
       it 'tokenが存在しないとき' do
         @order.token = nil
         @order.valid?
@@ -29,17 +40,17 @@ RSpec.describe OrderPurchase, type: :model do
         expect(@order.errors.full_messages).to include("Postal code can't be blank")
       end
       it '郵便番号がハイフンなしの場合' do
-        @order.postal_code = 1234567
+        @order.postal_code = '1234567'
         @order.valid?
         expect(@order.errors.full_messages).to include("Postal code は、3桁数字-4桁数字のハイフンありで記載してください。")
       end
       it '郵便番号の桁数が2桁-4桁の場合' do
-        @order.postal_code = 12-4567
+        @order.postal_code = '12-4567'
         @order.valid?
         expect(@order.errors.full_messages).to include("Postal code は、3桁数字-4桁数字のハイフンありで記載してください。")
       end
       it '郵便番号の桁数が3桁-3桁の場合' do
-        @order.postal_code = 123-456
+        @order.postal_code = '123-456'
         @order.valid?
         expect(@order.errors.full_messages).to include("Postal code は、3桁数字-4桁数字のハイフンありで記載してください。")
       end
@@ -64,17 +75,17 @@ RSpec.describe OrderPurchase, type: :model do
         expect(@order.errors.full_messages).to include("Phone number can't be blank")
       end
       it '電話番号の桁数が9桁の場合' do
-        @order.phone_number = 123456789 
+        @order.phone_number = '123456789'
         @order.valid?
         expect(@order.errors.full_messages).to include("Phone number は、-なしの10桁か11桁で記入してください。")
       end
       it '電話番号の桁数が12桁の場合' do
-        @order.phone_number = 123456789012
+        @order.phone_number = '123456789012'
         @order.valid?
         expect(@order.errors.full_messages).to include("Phone number は、-なしの10桁か11桁で記入してください。")
       end
       it '電話番号の-が存在するとき' do
-        @order.phone_number = "090-1234-5678"
+        @order.phone_number = '090-1234-5678'
         @order.valid?
         expect(@order.errors.full_messages).to include("Phone number は、-なしの10桁か11桁で記入してください。")
       end
