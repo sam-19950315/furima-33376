@@ -2,16 +2,20 @@ require 'rails_helper'
 
 RSpec.describe OrderPurchase, type: :model do
   before do
+    @item = FactoryBot.build(:item)
+    @user = FactoryBot.build(:user)
     @order = FactoryBot.build(:order_purchase)
+    @order.user_id = @user.id
+    @order.item_id = @item.id
   end
 
   describe '購入者情報登録' do
     context '購入者登録が正常にできる時' do
       it '郵便番号(ハイフンあり)、都道府県、市区町村、番地、建物名、電話番号(ハイフンなし),
-      tokenが入力されている場合' do
+      token、user_id、item_idが入力されている場合' do
         expect(@order).to be_valid
       end
-      it '郵便番号(ハイフンあり)、都道府県、市区町村、番地、電話番号(ハイフンなし)、tokenが入力されている場合' do
+      it '郵便番号(ハイフンあり)、都道府県、市区町村、番地、電話番号(ハイフンなし)、token、user_id、item_idが入力されている場合' do
         @order.building_name = ""
         expect(@order).to be_valid
       end
