@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!, only: [:index, :create]
-  before_action :find, only: [:index, :create]
+  before_action :item_find, only: [:index, :create]
 
   def index
     if current_user.id == @item.user_id || Purchase.exists?(item_id: @item.id)
@@ -27,7 +27,7 @@ class OrdersController < ApplicationController
     params.require(:order_purchase).permit(:postal_code, :prefecture_id, :manicipality, :address, :building_name, :phone_number).merge(user_id: current_user.id, item_id: params[:item_id], token: params[:token])
   end
 
-  def find
+  def item_find
     @item = Item.find(params[:item_id])
   end
 
