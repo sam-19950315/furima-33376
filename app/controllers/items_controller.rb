@@ -2,6 +2,7 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_action :find, only: [:show, :edit, :update, :destroy]
   before_action :security, only: [:edit, :update, :destroy]
+  before_action :purchase_exist, only: [:edit, :update]
 
   def index
     @items = Item.includes(:user).order('created_at DESC')
@@ -42,8 +43,7 @@ class ItemsController < ApplicationController
   private
 
   def item_params
-    params.require(:item).permit(:product_name, :product_explanation, :product_category_id, :product_quality_id,
-                                 :shipping_charges_id, :prefecture_id, :delivery_days_id, :price, :image).merge(user_id: current_user.id)
+    params.require(:item).permit(:product_name, :product_explanation, :product_category_id, :product_quality_id, :shipping_charges_id, :prefecture_id, :delivery_days_id, :price, :image).merge(user_id: current_user.id)
   end
 
   def find
@@ -53,4 +53,11 @@ class ItemsController < ApplicationController
   def security
     redirect_to action: :index unless current_user.id == @item.user_id
   end
+
+  def purchase_exist
+    if Purchase.exists?(item_id: @item.id)
+      redirect_to root_path
+    end
+  end
+
 end
