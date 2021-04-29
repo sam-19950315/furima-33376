@@ -7,7 +7,7 @@ RSpec.describe OrderPurchase, type: :model do
     @order = FactoryBot.build(:order_purchase)
     @order.user_id = @user.id
     @order.item_id = @item.id
-    sleep(0.1)
+    sleep(0.5)
   end
 
   describe '購入者情報登録' do
