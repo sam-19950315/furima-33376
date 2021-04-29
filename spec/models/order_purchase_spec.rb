@@ -94,6 +94,12 @@ RSpec.describe OrderPurchase, type: :model do
         @order.valid?
         expect(@order.errors.full_messages).to include("Phone number は、-なしの10桁か11桁で記入してください。")
       end
+      it '電話番号が英数混合だと登録できない' do
+        @order.phone_number = 'o9012345678'
+        @order.valid?
+        expect(@order.errors.full_messages).to include("Phone number は、-なしの10桁か11桁で記入してください。")
+      end
+
     end
   end
 end
