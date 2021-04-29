@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe OrderPurchase, type: :model do
   before do
-    @item = FactoryBot.build(:item)
-    @user = FactoryBot.build(:user)
+    @item = FactoryBot.create(:item)
+    @user = FactoryBot.create(:user)
     @order = FactoryBot.build(:order_purchase)
     @order.user_id = @user.id
     @order.item_id = @item.id
